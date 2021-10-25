@@ -63,21 +63,38 @@ function getWeek($date)
     return $week;
 }
 
-for($week_count = 0; $week_count < 43; $week_count++) {
+function run() {
+    echo "scrap";
+    for($week_count = 0; $week_count < 43; $week_count++) {
 
-    $decal = $week_count * 7 + intval(date('w' , strtotime(date('2021/09/01')))) + 2;
-    $date = date('Y-m-d', strtotime('+'. $decal .' day', strtotime('2021/09/01')));
-    echo "scraping: " . $date . "\n";
-    $response = getWeek($date);
+        $decal = $week_count * 7 + intval(date('w' , strtotime(date('2021/09/01')))) + 2;
+        $date = date('Y-m-d', strtotime('+'. $decal .' day', strtotime('2021/09/01')));
+        $response = getWeek($date);
 
-    if (!file_exists('data')) {
-        mkdir('data', 0777, true);
+        if (!file_exists('data')) {
+            mkdir('data', 0777, true);
+        }
+
+        $fp = fopen('data/' . $date . '.json', 'w');
+        if(count($response) - 1 != 0){
+            fwrite($fp, json_encode($response));
+        }
+        fclose($fp);
     }
-
-    $fp = fopen('data/' . $date . '.json', 'w');
-    if(count($response) - 1 != 0){
-        fwrite($fp, json_encode($response));
-    }
-    fclose($fp);
+    echo "end";
 }
 
+function start() {
+    run();
+    $nextTime   = microtime(true) + 30; // Set initial delay
+    while(TRUE) {
+        usleep(1000); // optional, if you want to be considerate
+
+        if (microtime(true) >= $nextTime) {
+            run();
+            $nextTime = microtime(true) + INTERVAL;
+        }
+    }
+}
+
+start();

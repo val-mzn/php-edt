@@ -88,17 +88,17 @@ foreach($files as $f)
         }
 
         if ($current_week == $date_str) {
-            echo "<li class='current list-group-item d-flex justify-content-between align-items-center font-monospace'>" .'<a class="text-decoration-none" href=detail?file='. $f .'>' .$date_str.'</a>';
+            echo "<li class='current list-group-item d-flex justify-content-between align-items-center font-monospace'>" .'<a class="text-decoration-none" href=detail.php?file='. $f .'>' .$date_str.'</a>';
             echo "<span class='badge bg-primary'>". $hour ." h</span>";
             echo "</li>";
         }
         else if(new DateTime() > date_create_from_format('Y-m-d', $date)){
-            echo "<li class='done list-group-item d-flex justify-content-between align-items-center font-monospace'>" .'<a class="text-decoration-none" href=detail?file='. $f .'>' .$date_str.'</a>';
+            echo "<li class='done list-group-item d-flex justify-content-between align-items-center font-monospace'>" .'<a class="text-decoration-none" href=detail.php?file='. $f .'>' .$date_str.'</a>';
             echo "<span class='badge bg-primary'>". $hour ." h</span>";
             echo "</li>";
         }
         else if($data){
-            echo "<li class='next list-group-item d-flex justify-content-between align-items-center font-monospace'>" .'<a class="text-decoration-none" href=detail?file='. $f .'>' .$date_str.'</a>';
+            echo "<li class='next list-group-item d-flex justify-content-between align-items-center font-monospace'>" .'<a class="text-decoration-none" href=detail.php?file='. $f .'>' .$date_str.'</a>';
             echo "<span class='badge bg-primary'>". $hour ." h</span>";
             echo "</li>";
         }
